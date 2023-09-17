@@ -1,11 +1,6 @@
-import mpmath
 import numpy as np
-import sympy as sp
 import librosa.display
 import matplotlib.pyplot as plt
-from scipy.integrate import quad
-from scipy.signal import spectrogram
-from scipy.integrate import simps
 
 #########################################################################
 #                   Instituto Tecnológico de Costa Rica
@@ -37,7 +32,7 @@ def signalReconstruction(signal):
     signalReconstructed = librosa.istft(dReconstructed)
     
     
-    return signalReconstructed
+    return (signalReconstructed,D,dReconstructed)
     
     
     
