@@ -123,7 +123,7 @@ sf.write('results//audio_Dem_Filtrada.wav', senal_demodulada2_filtrada, tasa_mue
 # Graficar las señales
 plt.figure(figsize=(12, 8))
 plt.subplot(5, 1, 1)
-plt.title('Señal Moduladora 1 (440 Hz)')
+plt.title('Suma de Señales Moduladas ')
 plt.plot(tiempo, senal_sumada)
 
 plt.subplot(5, 1, 2)
