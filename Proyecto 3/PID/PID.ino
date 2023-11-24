@@ -74,7 +74,11 @@ void controlDriverVoltage(float V, float Vmax) {
 }
 
 void setup() {
-  // put your setup code here, to run once:
+  
+  // Se establece el puerto serial y los pines para controlar el motor usando el L298N
+  Serial.begin(9600);
+  pinMode(pinDirMotor1, OUTPUT);
+  pinMode(pinDirMotor2, OUTPUT);
 
 }
 
