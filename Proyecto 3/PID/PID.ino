@@ -115,7 +115,7 @@ void loop() {
     if (V < Vmin) {
       V = Vmin;
       inte = intePrev;
-      valPrev= val;
+      valPrev= valPotPrincipal;
     }
     
   WriteDriverVoltage(V, Vmax);
