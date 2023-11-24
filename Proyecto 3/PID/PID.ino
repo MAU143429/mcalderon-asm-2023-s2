@@ -49,6 +49,29 @@ const byte pinPWM  = 6;
 const byte pinDirMotor1 = 7;
 const byte pinDirMotor2 = 8;
 
+/ Permite enviar la señal para que funcione el motor
+// Se basa en la dirección de giro e indica un valor  
+// analógico para establece la velocidad
+void controlDriverVoltage(float V, float Vmax) {
+  int valPWM = int(255 * abs(V) / Vmax);
+  if (valPWM > 255) {
+    valPWM = 255;
+  }
+  if (V > 0) {
+    digitalWrite(pinDirMotor1, HIGH);
+    digitalWrite(pinDirMotor2, LOW);
+  }
+  else if (V < 0) {
+    digitalWrite(pinDirMotor1, LOW);
+    digitalWrite(pinDirMotor2, HIGH);
+  }
+  else {
+    digitalWrite(pinDirMotor1, LOW);
+    digitalWrite(pinDirMotor2, LOW);
+  }
+  analogWrite(pinPWM, valPWM);
+
+}
 
 void setup() {
   // put your setup code here, to run once:
