@@ -74,7 +74,7 @@ void controlDriverVoltage(float V, float Vmax) {
 }
 
 void setup() {
-  
+
   // Se establece el puerto serial y los pines para controlar el motor usando el L298N
   Serial.begin(9600);
   pinMode(pinDirMotor1, OUTPUT);
@@ -83,6 +83,47 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  /// Se lee los valores de Vout de cada potenciometro
+  valPotPrincipal = analogRead(potPrincipal);                           
+  valPotPlato = analogRead(potPlato); 
+
+  // permite establecer el tiempo del sistema asi como realizar el calculo basico del delta t               
+  t = millis();
+  dt = (t - tPrev);
+
+  // Se almacenan los valores de Vout que representan la posicion angular del motor
+  // y del potenciometro principal.
+
+  theta = valPotPrincipal;                                        
+  thetaPlato = valPotPlato;                              
+
+  // Se calcula el error sencillo (Valor del potenciometro del plato - valor del potenciometro principal)
+  e = thetaPlato - theta;                                
+
+
+
+  // Se realiza el calculo de la integral haciendo uso del metodo del trapezoide.
+  inte = intePrev + (dt * (e + ePrev) / 2);         
+
+  // Se hace el calculo del valor de V utilizando la formula del modelo del PID y los coeficientes establecidos
+  V = kp * e + ki * inte + (kd * (e - ePrev) / dt) ; 
+
+  if (V > Vmax) {
+      V = Vmax;
+      inte = intePrev;
+    }
+    if (V < Vmin) {
+      V = Vmin;
+      inte = intePrev;
+      valPrev= val;
+    }
+    
+  WriteDriverVoltage(V, Vmax);
+  Serial.println(Theta_d); Serial.print(" \t");
+  Serial.print(Theta); Serial.print(" \t ");
+  tPrev = t;
+  intePrev = inte;
+  ePrev = e;
+  delay(10);
 
 }
